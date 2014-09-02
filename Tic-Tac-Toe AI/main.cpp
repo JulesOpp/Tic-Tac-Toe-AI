@@ -5,8 +5,7 @@ int CheckBoard(char board[], char player);
 int AIMove(char board[], char player);
 int CheckTwo(char board[], char player, int one, int two, int three);
 
-int main(int argc, const char * argv[])
-{
+int main(int argc, const char * argv[]) {
     srand(time(NULL));
     printf("Welcome To TicTacToe!\n");
     char board[] =   {' ',' ',' ',' ',' ',' ',' ',' ',' '};
@@ -25,15 +24,13 @@ int main(int argc, const char * argv[])
     return 0;
 }
 
-int CheckTwo(char board[], char player, int one, int two, int three)
-{
-    if (three < one && three < two) return -1;
-    else if (board[one]==player&&board[two]==player&&board[three]==' ') return three;
+int CheckTwo(char board[], char player, int one, int two, int three) {
+    if (board[one]==player&&board[two]==player&&board[three]==' ') return three;
+    else if (three < one && three < two) return -1;
     else return CheckTwo(board, player, three, one, two);
 }
 
-int AIMove(char board[], char player)
-{
+int AIMove(char board[], char player) {
     int check;
     for (int k=0;k<2;k++) {
         for(int i=0;i<3;i++) {
@@ -52,8 +49,7 @@ int AIMove(char board[], char player)
     return check;
 }
 
-int CheckBoard(char board[], char player)
-{    
+int CheckBoard(char board[], char player) {    
     for(int j=1;j<3;j++) {
         for(int i=0;i<3;i++) {
             if (board[i*3]==player&&board[i*3+1]==player&&board[i*3+2]==player) return j;
