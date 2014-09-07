@@ -27,7 +27,7 @@ int main(int argc, const char * argv[]) {
 int CheckTwo(char board[], char player, int one, int two, int three) {
     if (board[one]==player&&board[two]==player&&board[three]==' ') return three;
     else if (three < one && three < two) return -1;
-    else return CheckTwo(board, player, three, one, two);
+    return CheckTwo(board, player, three, one, two);
 }
 
 int AIMove(char board[], char player) {
