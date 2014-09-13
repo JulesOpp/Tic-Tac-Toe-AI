@@ -1,9 +1,11 @@
 #import "AppViewController.h"
 
-char board[] =   {' ',' ',' ',' ',' ',' ',' ',' ',' '};
-char play = PLAYERONE;
-int state = INGAME, mode = TWOPLAYER, turn = 0, check;
-NSArray *buttonArray;
+char board[] = {' ',' ',' ',' ',' ',' ',' ',' ',' '}, play = PLAYERONE;
+int state = INGAME, mode = TWOPLAYER, turn = 0, check, check2 = 0;
+UILabel* myLabel;
+UISegmentedControl *segmentControl;
+UIButton *resetButton, *buttonArray[9];
+UIImageView* backgroundPic;
 
 @implementation AppViewController
 - (int)CheckTwo: (int)one: (int)two: (int)three {
@@ -15,18 +17,23 @@ NSArray *buttonArray;
 - (void) AIMove {
     if (turn == 0 && board[4] == ' ') { check = 4; goto abc; }
     else if(turn == 0 && board[4] != ' ') {
-        do { check = rand() % 4; 
-            check = (int)(-2.0/3*pow(check, 3) + 3*pow(check, 2) - check/3.0);
-        } while (board[check] != ' ');
+        do { check = rand() % 4; check = (int)(-2.0/3*pow(check, 3) + 3*pow(check, 2) - check/3.0); } while (board[check] != ' ');
         goto abc;
     }
-    else if(turn==1&&board[4]==PLAYERTWO&&((board[0]==PLAYERONE&&board[8]==PLAYERONE)||(board[2]==PLAYERONE&&board[6]==PLAYERONE))) {
-        do check = 2*(rand() % 4)+1; while (board[check] != ' '); 
-        goto abc;
-    }
-    else if(turn==1&&board[4]==PLAYERONE&&((board[0]!=' '&&board[8]!=' ')||(board[2]!=' '&&board[6]!=' '))) {
-        do check = (rand()%2==0)?((board[0]!=' ')?2:0):(board[0]!=' ')?6:8; while (board[check] != ' ');
-        goto abc;
+    else if (turn == 1 && board[4] == PLAYERTWO) {
+        if ((board[1]==PLAYERONE&&(board[3]==PLAYERONE||board[5]==PLAYERONE))||(board[7]==PLAYERONE&&(board[3]==PLAYERONE||board[5]==PLAYERONE))) {
+            for (int i=0; i<9; i++) if(board[i]==PLAYERONE) check2 += i;
+            do { check=rand()%4; check = (int)(-2*(pow(check,3))/3.0+3*pow(check,2)-check/3.0); } while (check == 12-check2 || board[check] != ' ');
+            goto abc;
+        }
+        else if ((board[0]==PLAYERONE&&board[8]==PLAYERONE)||(board[2]==PLAYERONE&&board[6]==PLAYERONE)) {
+            do check = 2*(rand() % 4)+1; while (board[check] != ' '); 
+            goto abc;
+        }
+        else if ((board[0]!=' '&&board[8]!=' ')||(board[2]!=' '&&board[6]!=' ')) {
+            do check = (rand()%2==0)?((board[0]!=' ')?2:0):(board[0]!=' ')?6:8; while (board[check] != ' ');
+            goto abc;
+        }
     }
     for (int k=0;k<2;k++) {
         for(int i=0;i<3;i++) {
@@ -38,14 +45,13 @@ NSArray *buttonArray;
         play = (play==PLAYERTWO)?PLAYERONE:PLAYERTWO;
     }
     do check = rand() % 9; while (board[check] != ' ');
-abc:[[buttonArray objectAtIndex:check] setTitle:@"O" forState:UIControlStateNormal];
-    board[check] = PLAYERTWO, play = PLAYERONE, turn++;
+abc: [buttonArray[check] setTitle:@"O" forState:UIControlStateNormal];
+    board[check] = PLAYERTWO, play = PLAYERONE, turn++, check2 = 0;
 }
 
 - (IBAction)gameMode:(id)sender {
     for (int i=0; i<9; i++) {
-        board[i] = ' ';   
-        [[buttonArray objectAtIndex:i] setTitle:@"" forState:UIControlStateNormal];
+        board[i] = ' '; [buttonArray[i] setTitle:@"" forState:UIControlStateNormal];
     }
     state = INGAME, play = PLAYERONE, turn = 0, mode ^= 1;
     (mode==TWOPLAYER)?[myLabel setText:@"Game Mode: 1v1"]:[myLabel setText:@"Game Mode: AI"];
@@ -53,11 +59,10 @@ abc:[[buttonArray objectAtIndex:check] setTitle:@"O" forState:UIControlStateNorm
 
 - (IBAction)buttonReset:(id)sender {
     for (int i=0; i<9; i++) {
-        board[i] = ' ';   
-        [[buttonArray objectAtIndex:i] setTitle:@"" forState:UIControlStateNormal];
+        board[i] = ' '; [buttonArray[i] setTitle:@"" forState:UIControlStateNormal];
     }
-    [myLabel setText:@""];
     state = INGAME, play = PLAYERONE, turn = 0;
+    [myLabel setText:@""];
 }
 
 - (int)CheckBoard {   
@@ -79,21 +84,47 @@ cde:if (check == 0) return 0;
 }
 
 - (IBAction)buttonMulPress:(id)sender {
-    for (int i=0;i<9;i++) if (sender == [buttonArray objectAtIndex:i]) check = i;
-    if (board[check] != ' ' || state == OUTGAME) return;
+    if (board[[sender tag]] != ' ' || state == OUTGAME) return;
     [sender setTitle:[NSString stringWithFormat:@"%c",play] forState:UIControlStateNormal];
-    board[check] = play;
+    board[[sender tag]] = play;
     play = (play==PLAYERONE)?PLAYERTWO:PLAYERONE;
     if ([self CheckBoard] == 0 && mode == ONEPLAYER) { [self AIMove]; [self CheckBoard]; }
 }
 
 - (void)viewDidLoad { 
-    [super viewDidLoad];     
-    buttonArray = [[NSArray alloc] initWithObjects:button1,button2,button3,button4,button5,button6,button7,button8,button9,nil];
+    [super viewDidLoad];    
     srand([[NSDate date] timeIntervalSince1970]);
+    backgroundPic = [[UIImageView alloc] initWithFrame:self.view.frame];
+    [backgroundPic setImage:[UIImage imageNamed:@"Icon1.png"]];
+    [self.view addSubview:backgroundPic];
+    myLabel = [[UILabel alloc] initWithFrame:CGRectMake(65,67,186,21)];
+    myLabel.text = @"Welcome!!";
+    myLabel.font = [UIFont fontWithName:@"System" size:17.0];
+    myLabel.textColor = [UIColor whiteColor];
+    myLabel.backgroundColor = [UIColor clearColor];
+    myLabel.textAlignment = UITextAlignmentCenter;
+    [self.view addSubview:myLabel];
+    segmentControl = [[UISegmentedControl alloc]initWithItems:[NSArray arrayWithObjects:@"1v1",@"AI",nil]];
+    [segmentControl setSegmentedControlStyle:UISegmentedControlStylePlain];
+    segmentControl.frame = CGRectMake(57, 350, 99, 44);
+    [segmentControl addTarget:self action:@selector(gameMode:) forControlEvents:UIControlEventValueChanged];
+    [segmentControl setSelectedSegmentIndex:0];
+    [self.view addSubview:segmentControl];
+    resetButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+    resetButton.frame = CGRectMake(191,349,72,43);
+    [resetButton setTitle:@"Reset" forState:UIControlStateNormal];
+    [resetButton addTarget:self action:@selector(buttonReset:) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:resetButton];
+    for( int i = 0; i < 3; i++ ) for (int j=0;j<3;j++) {
+            buttonArray[i*3+j] = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+            buttonArray[i*3+j].frame = CGRectMake(88+50*j,150+50*i,37,37);
+            buttonArray[i*3+j].tag = i*3+j;
+            [buttonArray[i*3+j] addTarget:self action:@selector(buttonMulPress:) forControlEvents:UIControlEventTouchUpInside];
+            [self.view addSubview:buttonArray[i*3+j]];
+    }
 }
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil { return [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil]; }
-- (void)viewDidUnload { [super viewDidUnload]; }
+- (void)viewDidUnload { [super viewDidUnload];}
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 { return (interfaceOrientation == UIInterfaceOrientationPortrait); }
 @end

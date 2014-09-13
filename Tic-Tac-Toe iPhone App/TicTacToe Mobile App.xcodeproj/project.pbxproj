@@ -19,6 +19,7 @@
 		8446ACB819BA5AE9002B554B /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 8446ACB619BA5AE9002B554B /* InfoPlist.strings */; };
 		8446ACBB19BA5AE9002B554B /* TicTacToe_Mobile_AppTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 8446ACBA19BA5AE9002B554B /* TicTacToe_Mobile_AppTests.m */; };
 		84B28C9619BA9D3A00A72869 /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 84B28C9519BA9D3A00A72869 /* Icon.png */; };
+		84B8474F19BD100B00F8C608 /* Icon1.png in Resources */ = {isa = PBXBuildFile; fileRef = 84B8474E19BD100B00F8C608 /* Icon1.png */; };
 		84EB471E19BA672B008C6E1E /* AppViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 84EB471C19BA672B008C6E1E /* AppViewController.m */; };
 		84EB471F19BA672B008C6E1E /* AppViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 84EB471C19BA672B008C6E1E /* AppViewController.m */; };
 		84EB472019BA672B008C6E1E /* AppViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 84EB471D19BA672B008C6E1E /* AppViewController.xib */; };
@@ -53,6 +54,7 @@
 		8446ACB919BA5AE9002B554B /* TicTacToe_Mobile_AppTests.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TicTacToe_Mobile_AppTests.h; sourceTree = "<group>"; };
 		8446ACBA19BA5AE9002B554B /* TicTacToe_Mobile_AppTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TicTacToe_Mobile_AppTests.m; sourceTree = "<group>"; };
 		84B28C9519BA9D3A00A72869 /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Icon.png; path = ../Icon.png; sourceTree = "<group>"; };
+		84B8474E19BD100B00F8C608 /* Icon1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Icon1.png; path = ../Icon1.png; sourceTree = "<group>"; };
 		84EB471B19BA672B008C6E1E /* AppViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppViewController.h; sourceTree = "<group>"; };
 		84EB471C19BA672B008C6E1E /* AppViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppViewController.m; sourceTree = "<group>"; };
 		84EB471D19BA672B008C6E1E /* AppViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AppViewController.xib; sourceTree = "<group>"; };
@@ -128,6 +130,7 @@
 		8446AC9C19BA5AE9002B554B /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				84B8474E19BD100B00F8C608 /* Icon1.png */,
 				84B28C9519BA9D3A00A72869 /* Icon.png */,
 				8446AC9D19BA5AE9002B554B /* TicTacToe Mobile App-Info.plist */,
 				8446AC9E19BA5AE9002B554B /* InfoPlist.strings */,
@@ -229,6 +232,7 @@
 				8446ACA019BA5AE9002B554B /* InfoPlist.strings in Resources */,
 				84EB472019BA672B008C6E1E /* AppViewController.xib in Resources */,
 				84B28C9619BA9D3A00A72869 /* Icon.png in Resources */,
+				84B8474F19BD100B00F8C608 /* Icon1.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
